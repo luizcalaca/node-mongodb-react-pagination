@@ -1,0 +1,33 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.row {
+  display: block;
+  flex-wrap: wrap;
+}
+
+.col {
+  flex: 1;
+  text-align: center;
+  margin: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.pagination .page-item {
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.pagination .page-item.active {
+  background-color: #007bff;
+  color: #fff;
+}

@@ -3,7 +3,7 @@
 ## How to use
 
 ```
-cd backend && npm i && node ./src/inde.js
+cd backend && npm i && node ./src/index.js
 ```
 
 ```

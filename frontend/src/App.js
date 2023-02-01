@@ -7,19 +7,26 @@ function App() {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     axios
-      .get(`items/${currentPage}`)
+      .get(`items/${currentPage}?search=${searchQuery}`)
       .then(res => {
         setItems(res.data.items);
         setPages(res.data.pages);
       })
       .catch(err => console.log(err));
-  }, [currentPage]);
+  }, [currentPage, searchQuery]);
 
   return (
     <Container>
+      <input
+      type="text"
+      value={searchQuery}
+      onChange={e => setSearchQuery(e.target.value)}
+      placeholder="Search..."
+      />
       <Row>
         {items.map(item => (
           <Col key={item._id}>{item.name}</Col>

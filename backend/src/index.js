@@ -14,22 +14,23 @@ app.post("/items", async (req, res) => {
 });
 
 app.get("/items/:page", (req, res) => {
-  const perPage = 10;
+  const perPage = 5;
   const page = req.params.page || 1;
+  const search = req.query.search || "";
 
-  Person.find({})
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .exec((err, items) => {
-      Person.countDocuments().exec((err, count) => {
-        if (err) return res.status(400).send(err);
-        res.json({
-          items,
-          current: page,
-          pages: Math.ceil(count / perPage)
-        });
+  Person.find({ name: { $regex: search, $options: "i" } })
+  .skip(perPage * page - perPage)
+  .limit(perPage)
+  .exec((err, items) => {
+    Person.countDocuments({ name: { $regex: search, $options: "i" } }).exec((err, count) => {
+      if (err) return res.status(400).send(err);
+      res.json({
+        items,
+        current: page,
+        pages: Math.ceil(count / perPage)
       });
     });
+  });
 });
 
 app.listen(9696, () => {

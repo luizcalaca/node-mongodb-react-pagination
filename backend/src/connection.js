@@ -5,7 +5,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/full", {
 });
 
 const PersonSchema = new mongoose.Schema({
-  name: String
+  name: String,
+  description: String
 });
 
 const Person = mongoose.model('Person', PersonSchema);

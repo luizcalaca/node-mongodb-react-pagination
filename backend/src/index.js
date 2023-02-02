@@ -5,9 +5,9 @@ const Person = require("./connection");
 app.use(express.json())
 
 app.post("/items", async (req, res) => {
-  const {name} = req.body
+  const {name, description} = req.body
 
-  const person = new Person({name: name})
+  const person = new Person({name: name, description: description})
   await person.save()
   
   res.status(400).send("Saved");  
@@ -18,11 +18,11 @@ app.get("/items/:page", (req, res) => {
   const page = req.params.page || 1;
   const search = req.query.search || "";
 
-  Person.find({ name: { $regex: search, $options: "i" } })
+  Person.find({ $text : { $search: search, $caseSensitive: false}})
   .skip(perPage * page - perPage)
   .limit(perPage)
   .exec((err, items) => {
-    Person.countDocuments({ name: { $regex: search, $options: "i" } }).exec((err, count) => {
+    Person.countDocuments({ $text : { $search: search, $caseSensitive: false} }).exec((err, count) => {
       if (err) return res.status(400).send(err);
       res.json({
         items,

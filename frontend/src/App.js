@@ -29,7 +29,7 @@ function App() {
       />
       <Row>
         {items.map(item => (
-          <Col key={item._id}>{item.name}</Col>
+          <Col key={item._id}>{item.name} - {item.description}</Col>
         ))}
       </Row>
       <Row className="justify-content-center mt-3">
